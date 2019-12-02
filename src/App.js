@@ -131,8 +131,14 @@ function App(props) {
 
   return (
     <div style={{width: window.innerWidth * 1, height: window.innerHeight * 1}} className="App">
-      {!isLoggedIn && <Register handleRegister={handleRegister}/>}
-      {!isLoggedIn && <Login handleLogin={handleLogin}/>}
+      {!isLoggedIn && <div className="Register_login">
+        <div className="specialButtons">
+          <div id="register-button">Resgister</div>
+          <div id="login-button">login</div>
+        </div>
+        <Register handleRegister={handleRegister}/>
+        <Login handleLogin={handleLogin}/>
+      </div>}
       {/* {isLoggedIn ? <button onClick={signOut}>Sign out</button> : <button onClick={signInWithGoogle}>Sign in with Google</button>} */}
       {isLoggedIn && <div className="App">
         <header className="App-header">

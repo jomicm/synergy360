@@ -8,8 +8,11 @@ const users = require('./users');
 function initSocket(socket) {
   let id;
   socket
-    .on('init', async () => {
-      id = await users.create(socket);
+    .on('init', async (idPlayer) => {
+      console.log('inicializando!!!', idPlayer)
+      id = idPlayer;
+      await users.create(socket, idPlayer);
+      //socket.emit('init', { id });
       socket.emit('init', { id });
     })
     .on('request', (data) => {

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import withFirebaseAuth from 'react-with-firebase-auth'
 import * as firebase from 'firebase/app';
@@ -19,7 +19,7 @@ const database = firebase.database();
 const rand = (max, zero) => Math.floor(Math.random() * Math.floor(max)) + zero;
 const getUniqueCode = (limit, maxNum = 4, zero = 0) => {
   const newRes = [];
-  Array(limit).fill(0).map((e, ix) => {
+  Array(limit).fill(0).forEach((e, ix) => {
     if (!ix) { 
       newRes.push(rand(maxNum, zero));
     } else {
@@ -40,7 +40,12 @@ function App(props) {
   const [existingGameID, setExistingGameID] = useState('');
   const { signOut, signInWithGoogle } = props;
   const [player1, setPlayer1] = useState('');
+  const [player1UID, setPlayer1UID] = useState('');
   const [player2, setPlayer2] = useState('Waiting for player 2');
+  const [player2UID, setPlayer2UID] = useState('');
+  const [localPlayer, setLocalPlayer] = useState(false);
+  const [remotePlayer, setRemotePlayer] = useState(false);
+  const [startPlayerID, setStartPlayerID] = useState(false);
   let user = firebase.auth().currentUser;
 
   const handleRegister = async(userName, email, password, confirmationPassword) => {
@@ -79,11 +84,15 @@ function App(props) {
     const uID = getUniqueCode(6, 9, 0).join('')
     setGameID(uID);
     setPlayer1(user.displayName);
+    setPlayer1UID(user.uid);
+    setLocalPlayer(user.uid);
     database.ref('games/' + uID).set({'gameID': uID, player1: {id: user.uid, name: user.displayName}});
     await database.ref('/games/' + uID).on('value', (snapshot) => {
       console.log('aqui estamos papi', snapshot.val())
       if (snapshot.val().player2) {
         setPlayer2(snapshot.val().player2.name)
+        setPlayer2UID(snapshot.val().player2.id)
+        setRemotePlayer(snapshot.val().player2.id);
       }
     })
   };
@@ -110,8 +119,11 @@ function App(props) {
       console.log('res', snapshot.val())
       setGameID(existingGameID);
       setPlayer2(user.displayName);
+      setPlayer2UID(user.uid);
+      setLocalPlayer(user.uid);
       setPlayer1(snapshot.val().player1.name);
-
+      setPlayer1UID(snapshot.val().player1.id);
+      setRemotePlayer(snapshot.val().player1.id);
     } catch (err) {
       console.log(err);
     }
@@ -137,11 +149,12 @@ function App(props) {
       }
       {isLoggedIn && gameID && <div>
         <p>Game ID: {gameID}</p>
-        <p>Player 1: {player1}</p>
-        <p>Player 2: {player2}</p>
+        <p>Player 1: {player1} {`(${player1UID})`}</p>
+        <p>Player 2: {player2} {`(${player2UID})`}</p>
       </div>}
-      {/* <iframe title="Escape360" src={'http://172.46.3.245:8081/index.html?clientId=clientId1&gameId=4242'} style={{ width: '100%', height: '100%', backgroundColor: 'blueviolet' }} /> */}
-      <Call />
+      {/* {startPlayerID && <iframe title="Escape360" src={`http://172.46.3.245:8081/index.html?clientId=${startPlayerID}&gameId=4242`} style={{ width: '100%', height: '100%', backgroundColor: 'blueviolet' }} />} */}
+      {startPlayerID && <iframe title="Escape360" src={`http://192.168.0.101:8081/index.html?clientId=${startPlayerID}&gameId=${gameID}`} style={{ width: '100%', height: '100%', backgroundColor: 'blueviolet' }} />}
+      {localPlayer && <Call localPlayer={localPlayer} remotePlayer={remotePlayer} setStartPlayerID={setStartPlayerID}/>}
     </div>
   );
 }

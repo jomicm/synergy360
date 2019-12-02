@@ -18,8 +18,8 @@ const Login = (props) => {
   };
   return (
     <form name={'loginPage'}>
-      <input id='email' placeholder='Enter email' type='email' value={emailLogin} onChange={e => setEmailLogin(e.target.value)}/>
-      <input id='password' placeholder='Enter password' type='password' required value={passwordLogin} onChange={e => setPasswordLogin(e.target.value)}/>
+      <input id='emailLogin' placeholder='Enter email' type='email' value={emailLogin} onChange={e => setEmailLogin(e.target.value)}/>
+      <input id='passwordLogin' placeholder='Enter password' type='password' value={passwordLogin} onChange={e => setPasswordLogin(e.target.value)} required/>
       <button onClick={e => _handleLogin(e)}>Login!</button>
     </form>
   )

@@ -5,8 +5,6 @@ const socket = require('./socket');
 const app = express();
 const server = createServer(app);
 
-app.use('/', express.static(`${process.cwd()}/../client`));
-
 module.exports.run = (config) => {
   server.listen(config.PORT);
   socket(server);

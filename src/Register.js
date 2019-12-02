@@ -18,10 +18,10 @@ const Register = (props) => {
    }
   return (
     <form name={'registerPage'}>
-      <input id='userName' value={userName} placeholder='Enter username' onChange={e => setUserName(e.target.value)}/>
-      <input id='email' value={email} placeholder='Enter email' type='email' onChange={e => setEmail(e.target.value)}/>
-      <input id='password' value={password} placeholder='Enter password' type='password' required onChange={e => setPassword(e.target.value)}/>
-      <input id='confirmationPassword' placeholder='Confirm password' type='password' required value={confirmationPassword} onChange={e => setConfirmationPassword(e.target.value)}/>
+      <input id='userNameRegister' value={userName} placeholder='Enter username' onChange={e => setUserName(e.target.value)}/>
+      <input id='emailRegister' value={email} placeholder='Enter email' type='email' onChange={e => setEmail(e.target.value)}/>
+      <input id='passwordRegister' value={password} placeholder='Enter password' type='password' required onChange={e => setPassword(e.target.value)}/>
+      <input id='confirmationPasswordRegister' placeholder='Confirm password' type='password' required value={confirmationPassword} onChange={e => setConfirmationPassword(e.target.value)}/>
       <button onClick={e => _handleRegister(e)}>Register!</button>
     </form>
   )

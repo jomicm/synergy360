@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { render } from 'react-dom';
+// import { render } from 'react-dom';
 import _ from 'lodash';
 import socket from './socket';
 import PeerConnection from './PeerConnection';
@@ -8,27 +8,22 @@ import CallWindow from './CallWindow';
 import CallModal from './CallModal';
 
 export default class Call extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      clientId: '',
-      callWindow: '',
-      callModal: '',
-      callFrom: '',
-      localSrc: null,
-      peerSrc: null
-    };
-    this.pc = {};
-    this.config = null;
-    this.startCallHandler = this.startCall.bind(this);
-    this.endCallHandler = this.endCall.bind(this);
-    this.rejectCallHandler = this.rejectCall.bind(this);
-  }
+  state = {
+    clientId: '',
+    callWindow: '',
+    callModal: '',
+    callFrom: '',
+    localSrc: null,
+    peerSrc: null
+  };
+  pc = {};
+  config = null;
 
   componentDidMount() {
+    console.log('Component Mount Call>', this.props.localPlayer)
     socket
       .on('init', ({ id: clientId }) => {
-        document.title = `${clientId} - VideoCall`;
+        // document.title = `${clientId} - VideoCall`;
         this.setState({ clientId });
       })
       .on('request', ({ from: callFrom }) => {
@@ -40,12 +35,14 @@ export default class Call extends Component {
           if (data.sdp.type === 'offer') this.pc.createAnswer();
         } else this.pc.addIceCandidate(data.candidate);
       })
-      .on('end', this.endCall.bind(this, false))
-      .emit('init');
+      // .on('end', this.endCall.bind(this, false))
+      .on('end', this.endCall(this, false))
+      .emit('init', this.props.localPlayer);
   }
 
-  startCall(isCaller, friendID, config) {
+  startCall = (isCaller, friendID, config) => {
     this.config = config;
+    this.props.setStartPlayerID(this.state.clientId);
     this.pc = new PeerConnection(friendID)
       .on('localStream', (src) => {
         const newState = { callWindow: 'active', localSrc: src };
@@ -56,13 +53,13 @@ export default class Call extends Component {
       .start(isCaller, config);
   }
 
-  rejectCall() {
+  rejectCall = () => {
     const { callFrom } = this.state;
     socket.emit('end', { to: callFrom });
     this.setState({ callModal: '' });
   }
 
-  endCall(isStarter) {
+  endCall = (isStarter) => {
     if (_.isFunction(this.pc.stop)) {
       this.pc.stop(isStarter);
     }
@@ -82,7 +79,8 @@ export default class Call extends Component {
       <div>
         <MainWindow
           clientId={clientId}
-          startCall={this.startCallHandler}
+          friendId={this.props.remotePlayer}
+          startCall={this.startCall}
         />
         {!_.isEmpty(this.config) && (
           <CallWindow
@@ -91,13 +89,13 @@ export default class Call extends Component {
             peerSrc={peerSrc}
             config={this.config}
             mediaDevice={this.pc.mediaDevice}
-            endCall={this.endCallHandler}
+            endCall={this.endCall}
           />
         ) }
         <CallModal
           status={callModal}
-          startCall={this.startCallHandler}
-          rejectCall={this.rejectCallHandler}
+          startCall={this.startCall}
+          rejectCall={this.rejectCall}
           callFrom={callFrom}
         />
       </div>

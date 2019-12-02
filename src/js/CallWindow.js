@@ -39,26 +39,26 @@ function CallWindow({ peerSrc, localSrc, config, mediaDevice, status, endCall })
 
   return (
     <div className={classnames('call-window', status)}>
-      <video id="peerVideo" ref={peerVideo} autoPlay />
-      <video id="localVideo" ref={localVideo} autoPlay muted />
+      <video style={{width:100, height:100}} id="peerVideo" ref={peerVideo} autoPlay />
+      <video style={{width:100, height:100}} id="localVideo" ref={localVideo} autoPlay muted />
       <div className="video-control">
         <button
           key="btnVideo"
           type="button"
           className={getButtonClass('fa-video-camera', video)}
           onClick={() => toggleMediaDevice('video')}
-        />
+        >Camera</button>
         <button
           key="btnAudio"
           type="button"
           className={getButtonClass('fa-microphone', audio)}
           onClick={() => toggleMediaDevice('audio')}
-        />
+        >Audio</button>
         <button
           type="button"
           className="btn-action hangup fa fa-phone"
           onClick={() => endCall(true)}
-        />
+        >Hangup</button>
       </div>
     </div>
   );

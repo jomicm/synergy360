@@ -7,7 +7,7 @@ import MainWindow from './MainWindow';
 import CallWindow from './CallWindow';
 import CallModal from './CallModal';
 
-class App extends Component {
+export default class Call extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -105,4 +105,4 @@ class App extends Component {
   }
 }
 
-render(<App />, document.getElementById('root'));
+// render(<App />, document.getElementById('root'));

@@ -141,7 +141,7 @@ function App(props) {
         <p>Player 2: {player2}</p>
       </div>}
       {/* <iframe title="Escape360" src={'http://172.46.3.245:8081/index.html?clientId=clientId1&gameId=4242'} style={{ width: '100%', height: '100%', backgroundColor: 'blueviolet' }} /> */}
-      
+      <Call />
     </div>
   );
 }

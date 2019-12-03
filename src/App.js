@@ -46,6 +46,7 @@ function App(props) {
   const [localPlayer, setLocalPlayer] = useState(false);
   const [remotePlayer, setRemotePlayer] = useState(false);
   const [startPlayerID, setStartPlayerID] = useState(false);
+  const [registration, setRegistration] = useState('Login');
   let user = firebase.auth().currentUser;
 
   const handleRegister = async(userName, email, password, confirmationPassword) => {
@@ -131,8 +132,14 @@ function App(props) {
 
   return (
     <div style={{width: window.innerWidth * 1, height: window.innerHeight * 1}} className="App">
-      {!isLoggedIn && <Register handleRegister={handleRegister}/>}
-      {!isLoggedIn && <Login handleLogin={handleLogin}/>}
+      {!isLoggedIn && <div className="Register_login">
+        <div id="specialButtons">
+          <div id="register-button" onClick={() => setRegistration('Register')}>Register</div>
+          <div id="login-button" onClick={() => setRegistration('Login')}>login</div>
+        </div>
+        {(registration === 'Register') && <Register handleRegister={handleRegister}/>}
+        {(registration === 'Login') && <Login handleLogin={handleLogin}/>}
+      </div>}
       {/* {isLoggedIn ? <button onClick={signOut}>Sign out</button> : <button onClick={signInWithGoogle}>Sign in with Google</button>} */}
       {isLoggedIn && <div className="App">
         <header className="App-header">

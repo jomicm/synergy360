@@ -1,12 +1,75 @@
-/* body {
+body {
   background-color: black;
+  background-image: url("./assets/dark_corridor.jpg");
+  background-repeat: no-repeat;
   color: white;
 }
 .App {
   text-align: center;
+  display: flex;
+  justify-content: flex-start;
+}
+.Register_login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(32, 31, 29, 0.3);
+  border-radius: 10px;
+  margin: 30vh;
+  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-right: 30px;
+  font-size: 18px
+}
+.Register_login #specialButtons {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between
+}
+#register-button {
+  /* position: absolute;
+  right: 50px; */
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  padding: 5px 30px 5px 30px;
+  cursor: pointer;
+}
+#register-button:active {
+  border: 1px solid #000000;
+}
+#login-button {
+  display: flex;
+  flex-direction: row;
+  align-self: flex-start;
+  /* position: absolute;
+  left: 65px; */
+  padding: 5px 30px 5px 30px;
+  cursor: pointer;
+}
+#login-button:active {
+  border: 1px solid #000000;
+}
+.Register_login div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: baseline;
+}
+.Register_login div label {
+ margin: 5px;
+}
+.Register_login div label input {
+ margin-left: 25px;
+}
+.Register_login div button {
+  margin: 15px 0 15px 0;
 }
 
-.App-logo {
+
+/* .App-logo {
   height: 40vmin;
 }
 

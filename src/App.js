@@ -159,7 +159,8 @@ function App(props) {
         <p>Player 1: {player1} {`(${player1UID})`}</p>
         <p>Player 2: {player2} {`(${player2UID})`}</p>
       </div>}
-      {startPlayerID && <iframe title="Escape360" src={`http://172.46.3.245:8081/index.html?clientId=${startPlayerID}&gameId=${gameID}`} style={{ width: '100%', height: '100%', backgroundColor: 'blueviolet' }} />}
+      {startPlayerID && <iframe title="Escape360" src={`https://game.synergizer360.com/index.html?clientId=${startPlayerID}&gameId=${gameID}`} style={{ width: '100%', height: '100%', backgroundColor: 'blueviolet' }} />}
+      {/* {startPlayerID && <iframe title="Escape360" src={`http://172.46.3.245:8081/index.html?clientId=${startPlayerID}&gameId=${gameID}`} style={{ width: '100%', height: '100%', backgroundColor: 'blueviolet' }} />} */}
       {/* {startPlayerID && <iframe title="Escape360" src={`http://192.168.0.101:8081/index.html?clientId=${startPlayerID}&gameId=${gameID}`} style={{ width: '100%', height: '100%', backgroundColor: 'blueviolet' }} />} */}
       {localPlayer && <Call localPlayer={localPlayer} remotePlayer={remotePlayer} setStartPlayerID={setStartPlayerID}/>}
     </div>

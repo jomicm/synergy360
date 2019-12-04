@@ -95,12 +95,12 @@ export default class Call extends Component {
             endCall={this.endCall}
           />
         ) }
-        <CallModal
+        {this.state.display && <CallModal
           status={callModal}
           startCall={this.startCall}
           rejectCall={this.rejectCall}
           callFrom={callFrom}
-        />
+        />}
       </div>
     );
   }

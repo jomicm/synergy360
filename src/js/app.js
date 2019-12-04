@@ -14,7 +14,8 @@ export default class Call extends Component {
     callModal: '',
     callFrom: '',
     localSrc: null,
-    peerSrc: null
+    peerSrc: null,
+    display: true
   };
   pc = {};
   config = null;
@@ -41,6 +42,7 @@ export default class Call extends Component {
   }
 
   startCall = (isCaller, friendID, config) => {
+    this.setState({display: false});
     this.config = config;
     this.props.setStartPlayerID(this.state.clientId);
     this.pc = new PeerConnection(friendID)
@@ -75,13 +77,14 @@ export default class Call extends Component {
 
   render() {
     const { clientId, callFrom, callModal, callWindow, localSrc, peerSrc } = this.state;
+    
     return (
       <div>
-        <MainWindow
+        { this.state.display && <MainWindow
           clientId={clientId}
           friendId={this.props.remotePlayer}
           startCall={this.startCall}
-        />
+        /> }
         {!_.isEmpty(this.config) && (
           <CallWindow
             status={callWindow}

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 
 const Login = (props) => {
-  const [emailLogin, setEmailLogin] = useState('a1@gmail.com');
-  const [passwordLogin, setPasswordLogin] = useState('123456');
+  const [emailLogin, setEmailLogin] = useState('');
+  const [passwordLogin, setPasswordLogin] = useState('');
   const _handleLogin = async(e) => {
     e.preventDefault();
     if (!emailLogin || !passwordLogin)  return;
